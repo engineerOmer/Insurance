@@ -1,10 +1,8 @@
 package com.omerfaruksahin.allianzcase.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-
-
-
 
 @Entity
 @Getter
@@ -16,7 +14,10 @@ public class Campaign {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int campaignId;
+
+    @Size(min = 10,max = 50)
     private String campaignTitle;
+    @Size(min = 20,max = 200)
     private String campaignDetail;
     private boolean active;
     private boolean mukerrer = false;

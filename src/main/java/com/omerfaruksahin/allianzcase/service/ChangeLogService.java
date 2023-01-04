@@ -1,6 +1,6 @@
 package com.omerfaruksahin.allianzcase.service;
 
-import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.ChangeLogResponseDto;
+import com.omerfaruksahin.allianzcase.dto.response.changeLogResponse.ChangeLogResponseDto;
 import com.omerfaruksahin.allianzcase.model.Campaign;
 import com.omerfaruksahin.allianzcase.model.ChangeLog;
 import com.omerfaruksahin.allianzcase.repository.ChangeLogRepository;

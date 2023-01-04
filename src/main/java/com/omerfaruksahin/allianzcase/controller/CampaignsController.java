@@ -1,11 +1,11 @@
 package com.omerfaruksahin.allianzcase.controller;
 
-import com.omerfaruksahin.allianzcase.dto.request.ChangeLogListRequestDto;
+import com.omerfaruksahin.allianzcase.dto.request.changeLogRequest.ChangeLogListRequestDto;
 import com.omerfaruksahin.allianzcase.dto.request.campaignRequest.SaveCampaignRequestDto;
 import com.omerfaruksahin.allianzcase.dto.request.campaignRequest.SituationUpdateRequestDto;
 import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.CampaignResponseDto;
 import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.CampaignStatusInformationDto;
-import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.ChangeLogResponseDto;
+import com.omerfaruksahin.allianzcase.dto.response.changeLogResponse.ChangeLogResponseDto;
 import com.omerfaruksahin.allianzcase.service.CampaignService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,8 +32,6 @@ public class CampaignsController {
         return new ResponseEntity<>(campaignService.getStatus(),HttpStatus.OK);
     }
 
-
-    //service katmanini duzeltmen gerek
     @PutMapping("/situationUpdate")
     public ResponseEntity<CampaignResponseDto> situationUpdate(@RequestBody SituationUpdateRequestDto situationUpdateRequestDto){
         return new ResponseEntity<>(campaignService.changeStatusInformation(situationUpdateRequestDto),HttpStatus.OK);

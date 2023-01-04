@@ -19,7 +19,7 @@ public class ChangeLog {
     private LocalDateTime dateTime;
     private boolean situation;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "campaign_id")
+    //@JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
 }

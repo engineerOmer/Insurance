@@ -1,11 +1,12 @@
 package com.omerfaruksahin.allianzcase.service;
 
-import com.omerfaruksahin.allianzcase.dto.request.ChangeLogListRequestDto;
+import com.omerfaruksahin.allianzcase.dto.request.changeLogRequest.ChangeLogListRequestDto;
 import com.omerfaruksahin.allianzcase.dto.request.campaignRequest.SaveCampaignRequestDto;
 import com.omerfaruksahin.allianzcase.dto.request.campaignRequest.SituationUpdateRequestDto;
 import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.CampaignResponseDto;
 import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.CampaignStatusInformationDto;
-import com.omerfaruksahin.allianzcase.dto.response.campaignResponse.ChangeLogResponseDto;
+import com.omerfaruksahin.allianzcase.dto.response.changeLogResponse.ChangeLogResponseDto;
+import com.omerfaruksahin.allianzcase.exception.CampaignNotUpdateableException;
 import com.omerfaruksahin.allianzcase.model.Campaign;
 import com.omerfaruksahin.allianzcase.model.CampaignCategory;
 import com.omerfaruksahin.allianzcase.model.ChangeLog;
@@ -25,7 +26,7 @@ public class CampaignService {
     private final ChangeLogService changeLogService;
     public CampaignResponseDto saveCampaign(SaveCampaignRequestDto saveCampaignRequestDto){
         Campaign campaign = modelMapper.map(saveCampaignRequestDto,Campaign.class);
-        if (campaign.getCampaignCategory().isActive()==true){
+        if (campaign.getCampaignCategory().isActive()){
             campaign.setActive(true);
         }
         else {
@@ -33,8 +34,6 @@ public class CampaignService {
         }
         campaign= setMukerrer(campaign);
 
-        //String s= campaignCategory.getAbbreviation();
-        //campaignRepository.save(campaign.setCampaignCategory(s));
         campaignRepository.save(campaign);
         return modelMapper.map(campaign,CampaignResponseDto.class);
     }
@@ -42,7 +41,7 @@ public class CampaignService {
         String title = campaign.getCampaignTitle();
         String detail = campaign.getCampaignDetail();
         CampaignCategory campaignCategory1 = campaign.getCampaignCategory();
-        if (campaignRepository.findByCampaignTitleIsAndCampaignDetailIsAndCampaignCategoryIs(title,detail,campaignCategory1).size()==0){
+        if (campaignRepository.findByCampaignTitleIsAndCampaignDetailIsAndCampaignCategoryIs(title,detail,campaignCategory1).isEmpty()){
             return campaign;
         }
         else{
@@ -60,8 +59,8 @@ public class CampaignService {
         boolean active = situationUpdateRequestDto.isActive();
         Campaign campaign = campaignRepository.findById(id).orElseThrow();
         if (campaign.isMukerrer()){
-            return null;
-        }//exception ekle
+            throw  new CampaignNotUpdateableException();
+        }
         campaign.setActive(active);
         changeLogService.saveLog(ChangeLog.builder().dateTime(LocalDateTime.now()).situation(active).campaign(campaign).build());
         return modelMapper.map(campaignRepository.save(campaign), CampaignResponseDto.class);
@@ -71,6 +70,7 @@ public class CampaignService {
         return changeLogService.getList(campaign);
     }
 }
+
 
 
 

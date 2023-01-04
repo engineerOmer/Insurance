@@ -2,9 +2,10 @@ package com.omerfaruksahin.allianzcase.model;
 
 
 public enum CampaignCategory {
-    TAMAMLAYICI_SAGLIK_SIGORTASI("TSS",false),
-    OZEL_SAGLIK_SIGORTASI("OSS",false),
-    HAYAT_SIGORTASI("HS",true),DIGER("DIGER",false);
+    TSS("TAMAMLAYICI_SAGLIK_SIGORTASI",false),
+    OSS("OZEL_SAGLIK_SIGORTASI",false),
+    HS("OZEL_SAGLIK_SIGORTASI",true),
+    DIGER("DIGER",false);
 
     private String abbreviation;
 
