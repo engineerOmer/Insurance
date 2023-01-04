@@ -1,15 +1,17 @@
 package com.omerfaruksahin.allianzcase.model;
 
+import lombok.Getter;
 
+@Getter
 public enum CampaignCategory {
-    TSS("TAMAMLAYICI_SAGLIK_SIGORTASI",false),
-    OSS("OZEL_SAGLIK_SIGORTASI",false),
-    HS("OZEL_SAGLIK_SIGORTASI",true),
-    DIGER("DIGER",false);
+    TSS("TAMAMLAYICI_SAGLIK_SIGORTASI", false),
+    OSS("OZEL_SAGLIK_SIGORTASI", false),
+    HS("OZEL_SAGLIK_SIGORTASI", true),
+    DIGER("DIGER", false);
 
-    private String abbreviation;
+    private final String abbreviation;
 
-    private boolean active;
+    private final boolean active;
 
     CampaignCategory(String abbreviation, boolean active) {
         this.abbreviation = abbreviation;
@@ -17,11 +19,4 @@ public enum CampaignCategory {
     }
 
 
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
 }

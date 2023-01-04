@@ -26,27 +26,17 @@ public class CampaignService {
     private final ChangeLogService changeLogService;
     public CampaignResponseDto saveCampaign(SaveCampaignRequestDto saveCampaignRequestDto){
         Campaign campaign = modelMapper.map(saveCampaignRequestDto,Campaign.class);
-        if (campaign.getCampaignCategory().isActive()){
-            campaign.setActive(true);
-        }
-        else {
-            campaign.setActive(false);
-        }
-        campaign= setMukerrer(campaign);
-
+        campaign.setActive(campaign.getCampaignCategory().isActive());
+        setMukerrer(campaign);
         campaignRepository.save(campaign);
         return modelMapper.map(campaign,CampaignResponseDto.class);
     }
-    private Campaign setMukerrer(Campaign campaign){
+    private void setMukerrer(Campaign campaign){
         String title = campaign.getCampaignTitle();
         String detail = campaign.getCampaignDetail();
         CampaignCategory campaignCategory1 = campaign.getCampaignCategory();
-        if (campaignRepository.findByCampaignTitleIsAndCampaignDetailIsAndCampaignCategoryIs(title,detail,campaignCategory1).isEmpty()){
-            return campaign;
-        }
-        else{
+        if (!campaignRepository.findByCampaignTitleIsAndCampaignDetailIsAndCampaignCategoryIs(title, detail, campaignCategory1).isEmpty()) {
             campaign.setMukerrer(true);
-            return campaign;
         }
     }
     public CampaignStatusInformationDto getStatus(){

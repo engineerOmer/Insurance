@@ -10,7 +10,5 @@ public class SaveCampaignRequestDto {
     private String campaignTitle;
     private String campaignDetail;
 
-    //private boolean active;
-
     private CampaignCategory campaignCategory;
 }

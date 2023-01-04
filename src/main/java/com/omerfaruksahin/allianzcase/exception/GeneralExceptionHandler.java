@@ -1,7 +1,9 @@
 package com.omerfaruksahin.allianzcase.exception;
 
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,11 +18,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
-
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status,
-                                                                  WebRequest request) {
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(
                 error -> {
@@ -30,8 +29,9 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
                 }
         );
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-
     }
+
+
     @ExceptionHandler(CampaignNotUpdateableException.class)
     public ResponseEntity<?> campaignNotUpdateableExceptionHandler(CampaignNotUpdateableException exception){
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
